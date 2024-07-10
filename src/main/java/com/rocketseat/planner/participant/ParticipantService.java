@@ -18,7 +18,6 @@ public class ParticipantService {
 
         this.repository.saveAll(participants);
 
-        System.out.println(participants.get(0).getId());
     }
 
     public ParticipantCreateResponse registerParticipantToEvent(String email, Trip trip){
@@ -32,5 +31,8 @@ public class ParticipantService {
     }
     public void triggerConfirmationEmailToParticipant(String email){
 
+    }
+    public List<ParticipantData> getAllParticipantsFromEvent(UUID tripId){
+        return this.repository.findByTripId(tripId).stream().map(participant -> new ParticipantData(participant.getId(), participant.getName(), participant.getEmail(), participant.getIsConfirmed())).toList();
     }
 }
